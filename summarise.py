@@ -21,7 +21,7 @@ with open("transcript.txt", "r") as file:
 model = genai.GenerativeModel('gemini-1.5-flash-latest')
 
 # Generate a summary of the transcript
-response = model.generate_content(f"Create detailed notes from this lecture. Avoid Promotional and Motivational sections. Notes should be in properly structured and should be in english in markdown format. If something can't be asked in exam then avoid and if it can be asked then include.   :\n\n{transcript}")
+response = model.generate_content(f"Create very very detailed notes from this lecture. Avoid Promotional and Motivational sections. Notes should be properly structured and should be in english in markdown format. The Notes should not contain opinions, unnecessary and time-wasting things. The Notes should be from the exam point of view and for revision of the subject.   :\n\n{transcript}")
 
 # Save the summary to summary.txt
 with open("summary.txt", "w") as file:

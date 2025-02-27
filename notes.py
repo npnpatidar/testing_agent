@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 import time
 
+from icecream import ic
+
 def main():
     # Load environment variables
     load_dotenv()
@@ -15,7 +17,7 @@ def main():
         transcript = file.read()
 
     # Create 500-character chunks
-    chunk_size = 9000
+    chunk_size = 2000
     chunks = [transcript[i:i+chunk_size] for i in range(0, len(transcript), chunk_size)]
 
     comprehensive_notes = []
@@ -28,8 +30,23 @@ def main():
         next_chunk = chunks[i+1] if i < len(chunks)-1 else ""
 
         # Create prompt
-        prompt = f"""Create detailed, factual notes for the CURRENT TRANSCRIPT PART below, maintaining continuity 
-        with previous notes. Avoid promotional/motivational content. Focus on factual information and key points. Do not provide any extra summary or anything which breaks the continuity while concatenating the notes.Notes should be properly structured and formatted. When concatenating the notes of all the chunks, they should look continous and cohesive.
+        prompt = f"""
+        Create detailed, factual notes for the ONLY CURRENT TRANSCRIPT PART provided below. Ensure the notes maintain continuity with previous notes, avoiding repetition of content already covered. Adhere to the following guidelines:
+
+    Focus on Factual Information: Include only key points, data, and factual details relevant to the current transcript part. Avoid speculative, promotional, or motivational content.
+
+    Maintain Continuity: Ensure the notes seamlessly connect with previous notes, creating a cohesive and continuous flow when concatenated. Do not include summaries, conclusions, or any content that disrupts the continuity.
+
+    Structured Formatting: Organize the notes in a clear, structured format (e.g., bullet points, numbered lists, or paragraphs) for easy readability and logical flow.
+
+    Avoid Redundancy: Do not repeat information already covered in previous notes. Only include new or supplementary details from the current transcript part.
+
+    Precision and Conciseness: Be concise while retaining all critical information. Avoid unnecessary elaboration or filler content.
+
+    Contextual Awareness: Ensure the notes align with the context and tone of the ongoing discussion or transcript, maintaining a consistent narrative.
+
+By following these guidelines, the notes should integrate seamlessly with previous sections, forming a coherent and comprehensive record when combined.
+
 
         PREVIOUS CONTEXT (for reference):
         {prev_chunk}
@@ -40,7 +57,7 @@ def main():
         NEXT CONTEXT (for reference):
         {next_chunk}
 
-        PREVIOUS NOTES SUMMARY:
+        PREVIOUS NOTES SUMMARY(to avoid Redundancy and ensure continuation):
         {previous_notes_summary}
 
         DETAILED NOTES FOR CURRENT PART:"""
@@ -48,11 +65,11 @@ def main():
         # Generate notes
         response = model.generate_content(prompt)
         current_notes = response.text.strip()
+        ic(current_notes)
 
         # Update tracking variables
         comprehensive_notes.append(current_notes)
         previous_notes_summary = "\n".join(comprehensive_notes[-3:])  # Keep last 3 notes for context
-        print(previous_notes_summary)
 
         time.sleep(4)
 
