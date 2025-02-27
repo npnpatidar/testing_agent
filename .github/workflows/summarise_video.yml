@@ -19,8 +19,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install feedparser yt-dlp requests
-
+          pip install feedparser yt-dlp requests youtube-transcript-api google-generativeai
+ 
       - name: Run Summary Script
         env:
           YOUTUBE_CHANNEL_ID: ${{ secrets.YOUTUBE_CHANNEL_ID }}
