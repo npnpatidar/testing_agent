@@ -1,0 +1,9 @@
+requests
+youtube-transcript-api
+python-dotenv
+google-generativeai
+openai 
+chonkie
+chonkie[semantic]
+tiktoken
+# sentence-transformers

@@ -1,5 +1,6 @@
 .direnv
 .env
-*.txt
-*.txt
 *.md
+*.txt
+*.text
+!requirements.txt
