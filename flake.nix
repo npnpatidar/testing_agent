@@ -40,6 +40,7 @@
               python312Packages.venvShellHook
               python312Packages.pip
               python312Packages.icecream
+              python312Packages.sentence-transformers
               uv
               figlet
             ];
