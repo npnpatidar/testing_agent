@@ -1,9 +1,7 @@
 {
   description = "PyTorch with CUDA";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-  };
+  inputs = { nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable"; };
 
   outputs = { self, nixpkgs }:
     let
@@ -14,17 +12,15 @@
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
       # Import nixpkgs for each system
-      pkgsFor = system: import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in
-    {
+      pkgsFor = system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+    in {
       devShells = forAllSystems (system:
-        let
-          pkgs = pkgsFor system;
-        in
-        {
+        let pkgs = pkgsFor system;
+        in {
           default = pkgs.mkShell {
             LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
               pkgs.stdenv.cc.cc
@@ -35,15 +31,14 @@
             ];
 
             venvDir = ".venv";
-            packages = with pkgs; [
-              python312
-              python312Packages.venvShellHook
-              python312Packages.pip
-              python312Packages.icecream
-              python312Packages.sentence-transformers
-              uv
-              figlet
-            ];
+            packages = with pkgs;
+              [ python312 uv figlet ] ++ (with pkgs.python312Packages; [
+                venvShellHook
+                pip
+                icecream
+                sentence-transformers
+                yt-dlp
+              ]);
 
             shellHook = ''
               figlet RAG env
@@ -61,7 +56,6 @@
               figlet RAG started
             '';
           };
-        }
-      );
+        });
     };
 }
