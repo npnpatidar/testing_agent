@@ -6,4 +6,5 @@ openai
 chonkie
 chonkie[semantic]
 tiktoken
+yt-dlp
 # sentence-transformers
