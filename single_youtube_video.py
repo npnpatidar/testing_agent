@@ -52,6 +52,7 @@ def generate_summary(transcript, summary_folder, video_title):
             f"Use markdown format for clarity, including headers, bullet points, tables if needed. "
             f"Do not include opinions or redundant explanations. "
             f"Format the notes in a well-organized manner suitable for effective review.\n\n"
+            f"REMEMBER TO CREATE WELL ORGANIZED NOTES AND NOT SUMMARY"
             f"Transcript:\n{transcript}"
         )
         
