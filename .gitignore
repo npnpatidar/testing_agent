@@ -2,6 +2,8 @@
 .env
 *.md
 *.txt
+*.csv
+*.log
 *.text
 __pycache__
 !requirements.txt
