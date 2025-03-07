@@ -17,11 +17,18 @@
           inherit system;
           config.allowUnfree = true;
         };
-    in {
+    in
+    {
       devShells = forAllSystems (system:
         let pkgs = pkgsFor system;
-        in {
+        in
+        {
           default = pkgs.mkShell {
+
+            nativeBuildInputs = [
+              pkgs.playwright-driver.browsers
+            ];
+
             LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
               pkgs.stdenv.cc.cc
               pkgs.zlib
@@ -38,9 +45,12 @@
                 icecream
                 sentence-transformers
                 yt-dlp
+                playwright
               ]);
 
             shellHook = ''
+              export PLAYWRIGHT_BROWSERS_PATH=${pkgs.playwright-driver.browsers}
+              export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
               figlet RAG env
 
               if [ ! -d ".venv" ]; then

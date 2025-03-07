@@ -7,3 +7,5 @@ chonkie
 chonkie[semantic]
 tiktoken
 feedparser
+browser-use
+langchain-google-genai
