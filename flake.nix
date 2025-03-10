@@ -1,5 +1,5 @@
 {
-  description = "PyTorch with CUDA";
+  description = "General Python Environment";
 
   inputs = { nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable"; };
 
@@ -36,12 +36,11 @@
                 venvShellHook
                 pip
                 icecream
-                sentence-transformers
-                yt-dlp
+                python-dotenv
               ]);
 
             shellHook = ''
-              figlet RAG env
+              figlet "$(basename "$PWD") env"
 
               if [ ! -d ".venv" ]; then
                 uv venv .venv
@@ -53,7 +52,7 @@
 
               uv pip install -r requirements.txt
 
-              figlet RAG started
+              figlet "$(basename "$PWD") !!"
             '';
           };
         });
