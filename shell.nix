@@ -10,15 +10,17 @@ in pkgs.mkShell {
 
   venvDir = ".venv";
   packages = with pkgs;
-    [ python312 uv figlet ] ++ (with pkgs.python312Packages; [
+    [ python312 ] ++ (with pkgs.python312Packages; [
       venvShellHook
       pip
       icecream
       python-dotenv
+      uv
+      pyfiglet
     ]);
 
   shellHook = ''
-    figlet "$(basename "$PWD") env"
+    pyfiglet "$(basename "$PWD") env"
 
     if [ ! -d ".venv" ]; then
       uv venv .venv
@@ -30,7 +32,7 @@ in pkgs.mkShell {
 
     uv pip install -r requirements.txt
 
-    figlet "$(basename "$PWD") !!"
+    pyfiglet "$(basename "$PWD") !!"
   '';
 }
 
