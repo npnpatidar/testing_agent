@@ -2,8 +2,12 @@ requests
 youtube-transcript-api
 python-dotenv
 google-generativeai
-openai 
+openai
 chonkie
 chonkie[semantic]
 tiktoken
 feedparser
+tk
+bs4
+g4f
+pdf2image
